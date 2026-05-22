@@ -35,11 +35,9 @@ Step-by-Step Commands
     Open a terminal inside the root CRS/ folder.
 
     Compile the Project: Run this command to compile all files into an output folder named out:
-    Bash
 
     javac -d out src/model/*.java src/service/*.java src/store/*.java src/ui/*.java src/Main.java
 
     Run the Application: Run this command to launch the system:
-    Bash
 
     java -cp out Main

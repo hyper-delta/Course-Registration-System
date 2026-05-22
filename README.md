@@ -1,28 +1,37 @@
 # Course Registration System (CRS)
 
-A comprehensive, console-based university management application built using **Java 21**. This project implements core Object-Oriented Programming (OOP) concepts, a multi-layered architecture, and safe concurrent transaction management to handle student enrollments.
-
-## 🚀 Features
-
-- **Role-Based Access Control:** Separate menus and functional flows for Admin, Student, and Faculty users.
-- **Prerequisite Validation:** Prevents students from enrolling in advanced courses without satisfying foundational criteria.
-- **Credit Limit Enforcement:** Ensures course additions strictly align with a student's maximum allowable semester credits.
-- **Thread-Safe Concurrency Test:** Features a live demonstration simulating simultaneous multi-student enrollment requests to prove thread safety under tight seat constraints.
-- **In-Memory Store:** Employs a unified, decoupled repository framework mimicking database interactions.
+[cite_start]A comprehensive, console-based university management application engineered using **Java 21**[cite: 627]. [cite_start]This production-grade academic tool showcases robust Object-Oriented Programming (OOP) architectures, clean multi-layered separation of concerns, and thread-safe concurrent transaction handling for student enrollments[cite: 278, 684].
 
 ---
 
-## 📂 Project Structure
+## 🚀 Key Features
+
+* [cite_start]**Role-Based Access Control (RBAC):** Custom, decoupled dashboard menus and functional workflows tailored for **Admin**, **Student**, and **Faculty** users[cite: 362, 481, 559].
+* [cite_start]**Prerequisite Validation:** Intelligently restricts enrollment in advanced coursework if foundational criteria are unmet[cite: 239].
+* [cite_start]**Credit Limit Enforcement:** Monitored constraint verification to ensure student additions never exceed maximum allowable term credits[cite: 265].
+* [cite_start]**Thread-Safe Concurrency Test:** A built-in stress-test routine executing simultaneous student registration requests to demonstrate race-condition defenses under minimal seat capacity[cite: 670].
+* [cite_start]**In-Memory Unified Store:** Features a fully decoupled, central repository architecture acting as a mock data access layer[cite: 322].
+
+---
+
+## 📂 Project Directory Structure
 
 ```text
 CRS/
 └── src/
-    ├── model/       # Data Layer (User, Student, Course, Registration, etc.)
-    ├── service/     # Business Logic Layer (Registration validation & processing)
-    ├── store/       # Data Access/Repository Layer (In-memory collection management)
-    ├── ui/          # Presentation Layer (Admin, Student, and Faculty console menus)
-    └── Main.java    # Application Entry Point & Seeder Workflow
-🛠️ How to Compile & RunEnsure you have Java 21 or later installed on your system.Open a terminal inside the root CRS/ folder and execute the following commands:1. Compile the ProjectBashjavac -d out src/model/*.java src/service/*.java src/store/*.java src/ui/*.java src/Main.java
-2. Run the ApplicationBashjava -cp out Main
-🧪 Quick Walkthrough DemoUpon launch, the system automatically seeds sample university configurations (including user accounts and pre-linked course dependencies). You can immediately test these core scenarios:StepActionCredentials / CommandsExpected Behavior1Admin CheckLogin Option 1 → ID: A001Review assigned prerequisites and manage accounts.2Prerequisite SuccessLogin Option 2 → ID: S001Registering for CS201 succeeds because S001 has pre-completed CS101.3Prerequisite FailureLogin Option 2 → ID: S002Attempting to add CS201 blocks enrollment due to missing CS101 credits.4Concurrency RaceMain Menu Option 45 student threads race simultaneously for 2 final remaining seats in CS201. The synchronized gateway guarantees exactly 2 successful allocations without over-allocation errors.
----
+    ├── model/       # Data Layer (User blueprints, Course composition, and state models)
+    ├── service/     # Business Logic Layer (Registration verification, prerequisite rules)
+    ├── store/       # Data Access Layer (Centralized in-memory repository)
+    ├── ui/          # Presentation Layer (CLI layout consoles for menus and inputs)
+    └── Main.java    # Application entry point, system configuration, and seed engine
+
+    🛠️ Step-by-Step Compilation & ExecutionFollow these exact steps to run the application on your local machine.PrerequisitesEnsure you have Java Development Kit (JDK) 21 or higher installed. Check your version by running java -version in your terminal.Execution WorkflowOpen your Terminal: Navigate to the root directory of the project where your src/ folder is located (the CRS/ root folder).  Compile the Source Code:
+Compile all packages simultaneously into an isolated binaries output directory (out/) by executing: 
+
+javac -d out src/model/*.java src/service/*.java src/store/*.java src/ui/*.java src/Main.java
+
+Run the Application:
+Execute the compiled bytecode pointing directly to the Main class definitions file:  
+java -cp out Main
+
+🧪 Simulation Walkthrough GuideThe application comes pre-configured with standard mock university objects (seeded with standard administrative profiles, pre-linked course dependencies, and dummy student sets) to facilitate immediate functional validation.  StepTarget ScenarioExecution ParametersExpected System Behavior1Admin AuditingMain Menu 1 → ID: A001 Logs in as Dr. Admin. Grants access to assign faculty, set dynamic course prerequisites, and review institutional status.2Prerequisite Validation (Pass)Main Menu 2 → ID: S001 Registering for CS201 succeeds perfectly because Aryan Kapoor has pre-completed CS101 during configuration seeding.3Prerequisite Validation (Fail)Main Menu 2 → ID: S002 Attempting to add CS201 as Priya Mehta fails instantly, throwing a validation warning due to missing CS101 tracking records.4Concurrency Stress-TestMain Menu 4 Spawns an execution pool firing 5 distinct student threads simultaneously targeting a single 2-seat class (CS201). The synchronized architecture strictly locks overflow, admitting exactly 2 candidates while rejecting 3 gra

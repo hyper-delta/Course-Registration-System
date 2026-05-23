@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Faculty extends User {
@@ -8,9 +9,9 @@ public class Faculty extends User {
     private final String       department;
     private final List<Course> assignedCourses = new ArrayList<>();
 
-    public Faculty(String userId, String name, String email,
+    public Faculty(String userId, String name, String email, String password,
                    String facultyId, String department) {
-        super(userId, name, email);
+        super(userId, name, email, password);
         this.facultyId  = facultyId;
         this.department = department;
     }
@@ -25,10 +26,10 @@ public class Faculty extends User {
     }
 
     public void viewEnrolledStudents(Course course) {
-        System.out.println("\n+------ Enrolled Students: " + course.getCourseName() + " ------+");
+        System.out.println("\n+------ Enrolled: " + course.getCourseName() + " ------+");
         List<Student> students = course.getEnrolledStudents();
         if (students.isEmpty()) {
-            System.out.println("|  (no students enrolled)");
+            System.out.println("|  (none)");
         } else {
             students.forEach(s -> System.out.printf("|  %-10s  %s%n", s.getUserId(), s.getName()));
         }
@@ -37,5 +38,5 @@ public class Faculty extends User {
 
     public String       getFacultyId()       { return facultyId; }
     public String       getDepartment()      { return department; }
-    public List<Course> getAssignedCourses() { return assignedCourses; }
+    public List<Course> getAssignedCourses() { return Collections.unmodifiableList(assignedCourses); }
 }

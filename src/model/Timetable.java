@@ -15,13 +15,23 @@ public class Timetable {
     void removeCourse(Course c) { courses.remove(c); }
 
     public void viewSchedule() {
-        System.out.println("\n+------ Timetable: " + owner.getName() + " ------+");
-        if (courses.isEmpty()) {
-            System.out.println("|  (no courses enrolled)");
-        } else {
-            courses.forEach(c -> System.out.println("|  " + c));
-        }
-        System.out.printf("+------ Credits: %d / %d ------+%n",
-                owner.getTotalCredits(), owner.getMaxCredits());
+    System.out.println("\n+------ Timetable: " + owner.getName() + " ------+");
+
+    // Current semester
+    if (courses.isEmpty()) {
+        System.out.println("|  (no active courses this semester)");
+    } else {
+        courses.forEach(c -> System.out.println("|  " + c));
     }
+    System.out.printf("+------ Active Credits: %d / %d ------+%n",
+            owner.getTotalCredits(), owner.getMaxCredits());
+
+    // Academic transcript
+    var completed = owner.getCompletedCourses();
+    if (!completed.isEmpty()) {
+        System.out.println("|  -- Transcript --");
+        completed.forEach(c -> System.out.println(
+            "|  [DONE] " + c.getCourseName()));
+    }
+}
 }

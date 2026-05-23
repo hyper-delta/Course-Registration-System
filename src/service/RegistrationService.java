@@ -1,9 +1,9 @@
 package service;
 
+import exceptions.*;
+import interfaces.Registrable;
 import model.*;
 import store.DataStore;
-
-import java.util.List;
 
 public class RegistrationService implements Registrable {
 
@@ -13,91 +13,97 @@ public class RegistrationService implements Registrable {
         this.dataStore = dataStore;
     }
 
-    // ── Step 1: check all prerequisites are completed ──────────────────────
-    public boolean validatePrerequisites(Student student, Course course) {
-        List<Course> prereqs = course.getPrerequisites();
-        if (prereqs.isEmpty()) {
-            System.out.println("  [OK] No prerequisites required.");
-            return true;
-        }
-        for (Course prereq : prereqs) {
+    // ── Validation (throws exceptions instead of returning boolean) ────────
+
+    public void validatePrerequisites(Student student, Course course) {
+        for (Course prereq : course.getPrerequisites()) {
             if (!student.hasCompleted(prereq)) {
-                System.out.println("  [FAIL] Prerequisite not met: " + prereq.getCourseName());
-                return false;
+                throw new PrerequisiteNotMetException(prereq.getCourseName());
             }
         }
         System.out.println("  [OK] Prerequisites satisfied.");
-        return true;
     }
 
-    // ── Step 2: at least one seat free ─────────────────────────────────────
-    public boolean checkSeatAvailability(Course course) {
-        int seats = course.getAvailableSeats();
-        if (seats > 0) {
-            System.out.println("  [OK] Seats available: " + seats);
-            return true;
-        }
-        System.out.println("  [FAIL] No seats available.");
-        return false;
-    }
-
-    // ── Step 3: adding credits won't exceed the student's limit ────────────
-    public boolean checkCreditLimit(Student student, Course course) {
+    public void checkCreditLimit(Student student, Course course) {
         int current = student.getTotalCredits();
         int adding  = course.getCredits();
         int max     = student.getMaxCredits();
-        if (current + adding <= max) {
-            System.out.printf("  [OK] Credits: %d + %d = %d (max %d)%n",
-                    current, adding, current + adding, max);
-            return true;
+        if (current + adding > max) {
+            throw new CreditLimitExceededException(current, adding, max);
         }
-        System.out.printf("  [FAIL] Credit limit exceeded: %d + %d > %d%n",
-                current, adding, max);
-        return false;
+        System.out.printf("  [OK] Credits: %d + %d = %d (max %d)%n",
+                current, adding, current + adding, max);
     }
 
-    // ── Core: synchronized prevents race conditions (Phase 4) ──────────────
+    // ── Core operations ────────────────────────────────────────────────────
+
     @Override
-    public synchronized void register(Student student, Course course) {
+    public void register(Student student, Course course) {
         System.out.printf("%n[REGISTER] %s -> %s%n", student.getName(), course.getCourseName());
 
+        // These run outside the lock — they only read from the student's own data
         boolean alreadyIn = student.getRegistrations().stream()
                 .anyMatch(r -> r.getCourse().equals(course)
-                        && "Confirmed".equals(r.getStatus()));
+                        && r.getStatus() == RegistrationStatus.CONFIRMED);
         if (alreadyIn) {
-            System.out.println("  [FAIL] Already registered for this course.");
-            return;
+            throw new CRSException("Already registered for: " + course.getCourseName());
         }
 
-        if (!validatePrerequisites(student, course)) return;
-        if (!checkSeatAvailability(course))          return;
-        if (!checkCreditLimit(student, course))      return;
+        validatePrerequisites(student, course);  // throws PrerequisiteNotMetException
+        checkCreditLimit(student, course);        // throws CreditLimitExceededException
 
-        Registration reg = new Registration(student, course, "Confirmed");
-        dataStore.addRegistration(reg);
-        student.addRegistration(reg);
-        course.enrollStudent(student);
+        // ── Synchronized on the specific course object ────────────────────
+        // Allows concurrent registrations for DIFFERENT courses,
+        // while protecting seat count for THIS course atomically.
+        synchronized (course) {
+            if (course.getAvailableSeats() <= 0) {
+                // Course full — add to waitlist instead of rejecting outright
+                course.addToWaitlist(student);
+                System.out.println("  [WAITLIST] No seats left. "
+                        + student.getName() + " added to waitlist (position "
+                        + course.getWaitlist().size() + ").");
+                return;
+            }
+
+            // CHECK + ACT are atomic inside this synchronized block
+            Registration reg = new Registration(student, course, RegistrationStatus.CONFIRMED);
+            dataStore.addRegistration(reg);
+            student.addRegistration(reg);
+            course.enrollStudent(student);
+        }
 
         System.out.println("  [SUCCESS] Registration confirmed!");
     }
 
     @Override
-    public synchronized void drop(Student student, Course course) {
+    public void drop(Student student, Course course) {
         System.out.printf("%n[DROP] %s -> %s%n", student.getName(), course.getCourseName());
 
         Registration reg = student.getRegistrations().stream()
                 .filter(r -> r.getCourse().equals(course)
-                        && "Confirmed".equals(r.getStatus()))
-                .findFirst().orElse(null);
+                        && r.getStatus() == RegistrationStatus.CONFIRMED)
+                .findFirst()
+                .orElseThrow(() -> new CRSException(
+                        "No active registration for: " + course.getCourseName()));
 
-        if (reg == null) {
-            System.out.println("  [FAIL] No active registration found for this course.");
-            return;
+        synchronized (course) {
+            reg.setStatus(RegistrationStatus.DROPPED);
+            student.removeRegistration(reg);
+            course.unenrollStudent(student);
+
+            // ── Auto-enroll next student from waitlist ─────────────────────
+            Student next = course.pollWaitlist();
+            if (next != null) {
+                Registration waitlistReg =
+                        new Registration(next, course, RegistrationStatus.CONFIRMED);
+                dataStore.addRegistration(waitlistReg);
+                next.addRegistration(waitlistReg);
+                course.enrollStudent(next);
+                System.out.println("  [WAITLIST] " + next.getName()
+                        + " automatically enrolled from waitlist!");
+            }
         }
 
-        reg.setStatus("Dropped");
-        student.removeRegistration(reg);
-        course.unenrollStudent(student);
         System.out.println("  [SUCCESS] Course dropped.");
     }
 }

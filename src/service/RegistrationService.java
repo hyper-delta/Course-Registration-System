@@ -49,6 +49,13 @@ public class RegistrationService implements Registrable {
             throw new CRSException("Already registered for: " + course.getCourseName());
         }
 
+                // Already completed this course?
+        if (student.hasCompleted(course)) {
+            throw new CRSException(
+                "Cannot register: you have already completed " + course.getCourseName());
+        }
+        
+
         validatePrerequisites(student, course);  // throws PrerequisiteNotMetException
         checkCreditLimit(student, course);        // throws CreditLimitExceededException
 

@@ -1,4 +1,4 @@
-````md
+
 # 🎓 Course Registration System (CRS)
 
 A modern **JavaFX-based university course registration system** built using **Java 21**.
@@ -227,13 +227,6 @@ This project demonstrates:
 * Grade management
 * Docker deployment
 * Cloud hosting support
-
----
-
-## 👨‍💻 Author
-
-**Satyarth Gupta**
-MCA Project — Course Registration System (CRS)
 
 ---
 

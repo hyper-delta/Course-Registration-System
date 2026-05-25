@@ -1,0 +1,281 @@
+/* ═══════════════════════════════════════════
+   CRS Dark Theme — JavaFX Stylesheet
+   ═══════════════════════════════════════════ */
+
+/* ── Root background ─────────────────────── */
+.root {
+    -fx-background-color: #1a1a2e;
+    -fx-font-family: "Ubuntu", "Segoe UI", sans-serif;
+}
+
+/* ── Login screen card ───────────────────── */
+.login-card {
+    -fx-background-color: #16213e;
+    -fx-background-radius: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 40, 0, 0, 12);
+    -fx-padding: 52 60 52 60;
+}
+
+/* ── Typography ──────────────────────────── */
+.title-label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 40px;
+    -fx-font-weight: bold;
+}
+
+.subtitle-label {
+    -fx-text-fill: #a8a8b3;
+    -fx-font-size: 13px;
+}
+
+.section-label {
+    -fx-text-fill: #5a6a8a;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.dashboard-title {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+}
+
+.card-title {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+/* ── Role toggle buttons ─────────────────── */
+.role-btn {
+    -fx-background-color: #0f3460;
+    -fx-text-fill: #a8a8b3;
+    -fx-font-size: 13px;
+    -fx-padding: 9 0 9 0;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.role-btn:selected {
+    -fx-background-color: #e94560;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+.role-btn:hover:!selected {
+    -fx-background-color: #1a4a8a;
+    -fx-text-fill: #ffffff;
+}
+
+.role-btn-left  { -fx-background-radius: 8 0 0 8; }
+.role-btn-mid   { -fx-background-radius: 0; }
+.role-btn-right { -fx-background-radius: 0 8 8 0; }
+
+/* ── Input fields ────────────────────────── */
+.input-field {
+    -fx-background-color: #0f3460;
+    -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #4a5a7a;
+    -fx-font-size: 14px;
+    -fx-padding: 13 16 13 16;
+    -fx-background-radius: 8;
+    -fx-border-width: 0;
+    -fx-pref-height: 46px;
+}
+
+.input-field:focused {
+    -fx-background-color: #163870;
+    -fx-effect: dropshadow(gaussian, rgba(233,69,96,0.25), 10, 0, 0, 0);
+}
+
+/* ── Primary button ──────────────────────── */
+.btn-primary {
+    -fx-background-color: #e94560;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 13 0 13 0;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-pref-height: 48px;
+    -fx-border-width: 0;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #ff5a73;
+    -fx-effect: dropshadow(gaussian, rgba(233,69,96,0.45), 14, 0, 0, 3);
+}
+
+.btn-primary:pressed { -fx-background-color: #c73652; }
+
+/* ── Secondary button ────────────────────── */
+.btn-secondary {
+    -fx-background-color: #0f3460;
+    -fx-text-fill: #a8a8b3;
+    -fx-font-size: 13px;
+    -fx-padding: 9 18 9 18;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #1a4a8a;
+    -fx-text-fill: #ffffff;
+}
+
+/* ── Status / feedback labels ────────────── */
+.label-error   { -fx-text-fill: #e94560; -fx-font-size: 13px; }
+.label-success { -fx-text-fill: #4ecca3; -fx-font-size: 13px; }
+.label-warning { -fx-text-fill: #f5a623; -fx-font-size: 13px; }
+.label-muted   { -fx-text-fill: #5a6a8a; -fx-font-size: 12px; }
+
+/* ── Sidebar ─────────────────────────────── */
+.sidebar {
+    -fx-background-color: #16213e;
+    -fx-pref-width: 220px;
+    -fx-padding: 0;
+}
+
+.sidebar-header {
+    -fx-background-color: #0f3460;
+    -fx-padding: 24 20 24 20;
+}
+
+.sidebar-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #a8a8b3;
+    -fx-font-size: 14px;
+    -fx-padding: 13 20 13 24;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-width: 0;
+    -fx-pref-width: 220px;
+    -fx-max-width: 220px;
+}
+
+.sidebar-item:hover {
+    -fx-background-color: #0f3460;
+    -fx-text-fill: #ffffff;
+}
+
+.sidebar-item-active {
+    -fx-background-color: #e94560;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+/* ── Content area ────────────────────────── */
+.content-area {
+    -fx-background-color: #1a1a2e;
+    -fx-padding: 32 36 32 36;
+}
+
+/* ── Table view ──────────────────────────── */
+.table-view {
+    -fx-background-color: #16213e;
+    -fx-border-color: #0f3460;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #0f3460;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #a8a8b3;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.table-row-cell {
+    -fx-background-color: #16213e;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: #1a1a2e;
+}
+
+.table-row-cell:odd  { -fx-background-color: #1a2540; }
+.table-row-cell:even { -fx-background-color: #16213e; }
+
+.table-row-cell:hover {
+    -fx-background-color: #0f3460;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #e94560;
+}
+
+.table-cell {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13px;
+    -fx-padding: 10 14 10 14;
+    -fx-border-color: transparent;
+}
+
+.table-view .corner { -fx-background-color: #0f3460; }
+
+/* ── Info card ───────────────────────────── */
+.info-card {
+    -fx-background-color: #16213e;
+    -fx-background-radius: 12;
+    -fx-padding: 20 24 20 24;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 4);
+}
+
+/* ── Stat badge ──────────────────────────── */
+.stat-value {
+    -fx-text-fill: #e94560;
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+}
+
+.stat-label {
+    -fx-text-fill: #a8a8b3;
+    -fx-font-size: 12px;
+}
+
+/* ── Separator ───────────────────────────── */
+.separator .line { -fx-border-color: #0f3460; }
+
+/* ── ScrollPane ──────────────────────────── */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.scroll-pane .viewport { -fx-background-color: transparent; }
+
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-background-color: #16213e;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #0f3460;
+    -fx-background-radius: 4;
+}
+
+/* ── Status chips ────────────────────────── */
+.chip-confirmed {
+    -fx-background-color: rgba(78,204,163,0.15);
+    -fx-text-fill: #4ecca3;
+    -fx-background-radius: 20;
+    -fx-padding: 4 12 4 12;
+    -fx-font-size: 12px;
+}
+
+.chip-dropped {
+    -fx-background-color: rgba(233,69,96,0.15);
+    -fx-text-fill: #e94560;
+    -fx-background-radius: 20;
+    -fx-padding: 4 12 4 12;
+    -fx-font-size: 12px;
+}
+
+.chip-waitlist {
+    -fx-background-color: rgba(245,166,35,0.15);
+    -fx-text-fill: #f5a623;
+    -fx-background-radius: 20;
+    -fx-padding: 4 12 4 12;
+    -fx-font-size: 12px;
+}

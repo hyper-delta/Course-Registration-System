@@ -146,14 +146,20 @@ public class LoginController {
             errorLabel,
             hint
         );
-        // ── Concurrency test shortcut (outside the card) ──────────
         Button concurrencyBtn = new Button("⚡  View Concurrency Test");
         concurrencyBtn.getStyleClass().add("btn-secondary");
-        concurrencyBtn.setOnAction(e -> 
-        MainApp.switchScene(ConcurrencyController.getScene()));
-        
+        concurrencyBtn.setOnAction(e ->
+                MainApp.switchScene(ConcurrencyController.getScene()));
 
-        VBox pageWrapper = new VBox(16, card, concurrencyBtn);
+        Button aboutBtn = new Button("ℹ️  About This Project");
+        aboutBtn.getStyleClass().add("btn-secondary");
+        aboutBtn.setOnAction(e ->
+                 MainApp.switchScene(AboutController.getScene()));
+
+        HBox bottomBtns = new HBox(12, concurrencyBtn, aboutBtn);
+        bottomBtns.setAlignment(Pos.CENTER);
+
+        VBox pageWrapper = new VBox(16, card, bottomBtns);
         pageWrapper.setAlignment(Pos.CENTER);
 
         root.getChildren().add(pageWrapper);

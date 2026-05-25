@@ -3,261 +3,202 @@ package gui;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class AboutController {
 
     public static Scene getScene() {
-
         BorderPane root = new BorderPane();
         root.getStyleClass().add("root");
 
-        VBox content = new VBox(22);
+        VBox content = new VBox(28);
         content.getStyleClass().add("content-area");
-        content.setPadding(new Insets(40, 60, 40, 60));
+        content.setPadding(new Insets(44, 60, 44, 60));
+        content.setAlignment(Pos.TOP_CENTER);
 
-        // ═══════════════════════════════════════════════════════
-        // HEADER
-        // ═══════════════════════════════════════════════════════
+        // ── Hero header ───────────────────────────────────────
+        Label logo = new Label("🎓");
+        logo.setStyle("-fx-font-size: 52px;");
 
-        Label title = new Label("ℹ Project Information");
-        title.getStyleClass().add("dashboard-title");
+        Label title = new Label("Course Registration System");
+        title.setStyle(
+            "-fx-text-fill: #ffffff;" +
+            "-fx-font-size: 30px;" +
+            "-fx-font-weight: bold;"
+        );
 
-        Label subtitle = new Label(
-                "Course Registration System  ·  MCA Final Project");
+        Label subtitle = new Label("MCA Java Project  ·  JavaFX GUI  ·  Java 21");
         subtitle.getStyleClass().add("subtitle-label");
 
-        VBox headerBox = new VBox(4, title, subtitle);
+        VBox hero = new VBox(8, logo, title, subtitle);
+        hero.setAlignment(Pos.CENTER);
 
-        // ═══════════════════════════════════════════════════════
-        // PROJECT INFO CARD
-        // ═══════════════════════════════════════════════════════
-
-        VBox projectCard = new VBox(14);
-        projectCard.getStyleClass().add("info-card");
-
-        Label projectHdr = new Label("Project Overview");
-        projectHdr.getStyleClass().add("card-title");
-
-        Label p1 = info("Project Title",
-                "Course Registration System (CRS)");
-
-        Label p2 = info("Project Type",
-                "University ERP / Academic Management System");
-
-        Label p3 = info("Objective",
-                "To simulate a real-world university course "
-              + "registration workflow using Java, JavaFX, "
-              + "OOP concepts, and concurrency.");
-
-        projectCard.getChildren().addAll(
-                projectHdr, p1, p2, p3
+        // ── Three info cards in a row ─────────────────────────
+        VBox projectCard = infoCard("Project Overview",
+            new String[][]{
+                {"Name",     "Course Registration System (CRS)"},
+                {"Purpose",  "Simulate a university ERP module"},
+                {"Data",     "In-memory  ·  Collections & Queue"},
+                {"GUI",      "JavaFX 21  ·  Dark theme  ·  CSS"},
+                {"Version",  "Java 21 LTS"}
+            }
         );
 
-        // ═══════════════════════════════════════════════════════
-        // STUDENT DETAILS CARD
-        // ═══════════════════════════════════════════════════════
-
-        VBox studentCard = new VBox(14);
-        studentCard.getStyleClass().add("info-card");
-
-        Label studentHdr = new Label("Student Details");
-        studentHdr.getStyleClass().add("card-title");
-
-        Label s1 = info("Name", "YOUR NAME");
-        Label s2 = info("Roll Number", "YOUR ROLL NUMBER");
-        Label s3 = info("Course", "Master of Computer Applications (MCA)");
-        Label s4 = info("Department", "Computer Applications");
-
-        studentCard.getChildren().addAll(
-                studentHdr, s1, s2, s3, s4
+        VBox techCard = infoCard("Tech Stack",
+            new String[][]{
+                {"Language",    "Java 21"},
+                {"UI",          "JavaFX 21  ·  Scene Builder 26"},
+                {"Concurrency", "ExecutorService  ·  synchronized"},
+                {"Collections", "ArrayList  ·  LinkedList Queue"},
+                {"Pattern",     "MVC  ·  Repository  ·  Interface"}
+            }
         );
 
-        // ═══════════════════════════════════════════════════════
-        // TECH STACK CARD
-        // ═══════════════════════════════════════════════════════
-
-        VBox techCard = new VBox(14);
-        techCard.getStyleClass().add("info-card");
-
-        Label techHdr = new Label("Technologies Used");
-        techHdr.getStyleClass().add("card-title");
-
-        FlowPane techPane = new FlowPane();
-        techPane.setHgap(10);
-        techPane.setVgap(10);
-
-        techPane.getChildren().addAll(
-                chip("Java"),
-                chip("JavaFX"),
-                chip("OOP"),
-                chip("Multithreading"),
-                chip("ExecutorService"),
-                chip("Synchronization"),
-                chip("Collections Framework"),
-                chip("MVC Architecture")
+        VBox oodCard = infoCard("OOD Concepts Applied",
+            new String[][]{
+                {"Inheritance",   "User → Student, Faculty, Admin"},
+                {"Abstraction",   "Registrable interface"},
+                {"Encapsulation", "Private fields + getters/setters"},
+                {"Polymorphism",  "RegistrationService implements Registrable"},
+                {"Composition",   "Student owns Timetable"}
+            }
         );
 
-        techCard.getChildren().addAll(techHdr, techPane);
+        HBox cardsRow = new HBox(20, projectCard, techCard, oodCard);
+        cardsRow.setAlignment(Pos.TOP_CENTER);
+        HBox.setHgrow(projectCard, Priority.ALWAYS);
+        HBox.setHgrow(techCard,    Priority.ALWAYS);
+        HBox.setHgrow(oodCard,     Priority.ALWAYS);
 
-        // ═══════════════════════════════════════════════════════
-        // OOD CONCEPTS CARD
-        // ═══════════════════════════════════════════════════════
+        // ── Feature chips (FlowPane so they wrap) ─────────────
+        FlowPane featuresRow = new FlowPane(12, 10,
+            featureChip("Password Auth"),
+            featureChip("Thread-Safe Registration"),
+            featureChip("Waitlist Queue"),
+            featureChip("Prerequisite Validation"),
+            featureChip("Circular Dep. Detection"),
+            featureChip("Live Concurrency Demo")
+        );
+        featuresRow.setAlignment(Pos.CENTER);
 
-        VBox oopCard = new VBox(14);
-        oopCard.getStyleClass().add("info-card");
-
-        Label oopHdr = new Label("Object-Oriented Concepts");
-        oopHdr.getStyleClass().add("card-title");
-
-        VBox concepts = new VBox(10,
-                concept("Inheritance",
-                        "User → Student / Faculty / Admin"),
-
-                concept("Encapsulation",
-                        "Private fields with controlled access"),
-
-                concept("Abstraction",
-                        "Registrable interface"),
-
-                concept("Polymorphism",
-                        "Dynamic registration behavior"),
-
-                concept("Composition",
-                        "Student contains Timetable"),
-
-                concept("Concurrency",
-                        "Thread-safe seat allocation using synchronized")
+        // ── System modules section ────────────────────────────
+        Label modulesHdr = new Label("System Modules");
+        modulesHdr.setStyle(
+            "-fx-text-fill: #ffffff;" +
+            "-fx-font-size: 15px;" +
+            "-fx-font-weight: bold;"
         );
 
-        oopCard.getChildren().addAll(oopHdr, concepts);
-
-        // ═══════════════════════════════════════════════════════
-        // FEATURES CARD
-        // ═══════════════════════════════════════════════════════
-
-        VBox featureCard = new VBox(14);
-        featureCard.getStyleClass().add("info-card");
-
-        Label featureHdr = new Label("Major Features");
-        featureHdr.getStyleClass().add("card-title");
-
-        VBox features = new VBox(8,
-                feature("✔ Student, Faculty & Admin dashboards"),
-                feature("✔ Course registration and drop"),
-                feature("✔ Prerequisite validation"),
-                feature("✔ Waitlist management"),
-                feature("✔ Faculty assignment"),
-                feature("✔ Concurrent registration simulation"),
-                feature("✔ Real-time activity logging")
+        HBox modulesRow = new HBox(16,
+            moduleCard("Student",  "Register  ·  Drop  ·  Waitlist  ·  Timetable"),
+            moduleCard("Faculty",  "View Enrolled  ·  Course Overview"),
+            moduleCard("Admin",    "Manage Courses  ·  Prerequisites  ·  Users"),
+            moduleCard("System",   "Validation  ·  Concurrency  ·  Exceptions")
         );
+        modulesRow.setAlignment(Pos.CENTER);
+        for (javafx.scene.Node n : modulesRow.getChildren()) {
+            HBox.setHgrow(n, Priority.ALWAYS);
+        }
 
-        featureCard.getChildren().addAll(featureHdr, features);
+        VBox modulesSection = new VBox(14, modulesHdr, modulesRow);
+        modulesSection.getStyleClass().add("info-card");
 
-        // ═══════════════════════════════════════════════════════
-        // BACK BUTTON
-        // ═══════════════════════════════════════════════════════
-
+        // ── Back button ───────────────────────────────────────
         Button backBtn = new Button("← Back to Login");
         backBtn.getStyleClass().add("btn-secondary");
-
-        backBtn.setOnAction(e ->
-                MainApp.switchScene(LoginController.getScene()));
-
-        // ═══════════════════════════════════════════════════════
-        // LAYOUT
-        // ═══════════════════════════════════════════════════════
-
-        HBox topRow = new HBox(18, projectCard, studentCard);
-        HBox.setHgrow(projectCard, Priority.ALWAYS);
-        HBox.setHgrow(studentCard, Priority.ALWAYS);
-
-        HBox bottomRow = new HBox(18, techCard, oopCard);
-        HBox.setHgrow(techCard, Priority.ALWAYS);
-        HBox.setHgrow(oopCard, Priority.ALWAYS);
+        backBtn.setOnAction(e -> MainApp.switchScene(LoginController.getScene()));
 
         content.getChildren().addAll(
-                headerBox,
-                topRow,
-                bottomRow,
-                featureCard,
-                backBtn
+            hero,
+            cardsRow,
+            featuresRow,
+            modulesSection,
+            backBtn
         );
 
         root.setCenter(content);
 
-        Scene scene = new Scene(root, 1180, 820);
+        Scene scene = new Scene(root, 1100, 700);
         scene.getStylesheets().add(MainApp.getCss());
-
         return scene;
     }
 
-    // ═══════════════════════════════════════════════════════
-    // HELPERS
-    // ═══════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════
+    //  BUILDERS
+    // ═══════════════════════════════════════════════════════════
 
-    private static Label info(String key, String value) {
-
-        Label lbl = new Label(key + " :  " + value);
-
-        lbl.setStyle(
-                "-fx-text-fill: #ffffff;" +
-                "-fx-font-size: 13px;"
+    private static VBox infoCard(String heading, String[][] rows) {
+        Label head = new Label(heading);
+        head.setStyle(
+            "-fx-text-fill: #e94560;" +
+            "-fx-font-size: 14px;" +
+            "-fx-font-weight: bold;"
         );
 
-        lbl.setWrapText(true);
+        VBox card = new VBox(10);
+        card.getStyleClass().add("info-card");
+        card.getChildren().add(head);
+        card.getChildren().add(new Separator());
 
-        return lbl;
-    }
+        for (String[] row : rows) {
+            HBox line = new HBox(8);
+            line.setAlignment(Pos.TOP_LEFT);
 
-    private static HBox concept(String title, String desc) {
-
-        Label t = new Label(title + "  →  ");
-        t.setStyle(
-                "-fx-text-fill: #e94560;" +
-                "-fx-font-size: 13px;" +
-                "-fx-font-weight: bold;"
-        );
-
-        Label d = new Label(desc);
-        d.setStyle(
-                "-fx-text-fill: #ffffff;" +
-                "-fx-font-size: 13px;"
-        );
-
-        HBox row = new HBox(6, t, d);
-        row.setAlignment(Pos.CENTER_LEFT);
-
-        return row;
-    }
-
-    private static Label feature(String text) {
-
-        Label lbl = new Label(text);
-
-        lbl.setStyle(
-                "-fx-text-fill: #4ecca3;" +
-                "-fx-font-size: 13px;"
-        );
-
-        return lbl;
-    }
-
-    private static Label chip(String text) {
-
-        Label chip = new Label(text);
-
-        chip.setStyle(
-                "-fx-background-color: rgba(233,69,96,0.15);" +
-                "-fx-text-fill: #e94560;" +
-                "-fx-padding: 8 14 8 14;" +
-                "-fx-background-radius: 20;" +
+            Label keyLbl = new Label(row[0]);
+            keyLbl.setStyle(
+                "-fx-text-fill: #a8a8b3;" +
                 "-fx-font-size: 12px;" +
-                "-fx-font-weight: bold;"
+                "-fx-min-width: 90px;" +
+                "-fx-max-width: 90px;"
+            );
+
+            Label valLbl = new Label(row[1]);
+            valLbl.setStyle(
+                "-fx-text-fill: #ffffff;" +
+                "-fx-font-size: 12px;"
+            );
+            valLbl.setWrapText(true);
+            HBox.setHgrow(valLbl, Priority.ALWAYS);
+
+            line.getChildren().addAll(keyLbl, valLbl);
+            card.getChildren().add(line);
+        }
+
+        return card;
+    }
+
+    private static Label featureChip(String text) {
+        Label chip = new Label(text);
+        chip.setStyle(
+            "-fx-background-color: #0f3460;" +
+            "-fx-text-fill: #4ecca3;" +
+            "-fx-background-radius: 20;" +
+            "-fx-padding: 6 14 6 14;" +
+            "-fx-font-size: 12px;" +
+            "-fx-font-weight: bold;"
+        );
+        return chip;
+    }
+
+    private static VBox moduleCard(String title, String details) {
+        Label titleLbl = new Label(title);
+        titleLbl.setStyle(
+            "-fx-text-fill: #ffffff;" +
+            "-fx-font-size: 13px;" +
+            "-fx-font-weight: bold;"
         );
 
-        return chip;
+        Label detailLbl = new Label(details);
+        detailLbl.setStyle(
+            "-fx-text-fill: #a8a8b3;" +
+            "-fx-font-size: 11px;"
+        );
+        detailLbl.setWrapText(true);
+
+        VBox card = new VBox(6, titleLbl, detailLbl);
+        card.getStyleClass().add("info-card");
+        card.setAlignment(Pos.TOP_LEFT);
+        return card;
     }
 }

@@ -1,16 +1,17 @@
 ````md
 # 🎓 Course Registration System (CRS)
 
-A modern JavaFX-based university course registration system built using **Java 21**.  
-This project demonstrates advanced **Object-Oriented Design (OOD)** concepts, layered architecture, thread-safe concurrent processing, and a professional desktop GUI using JavaFX and custom CSS styling.
+A modern **JavaFX-based university course registration system** built using **Java 21**.
 
-The system includes dedicated dashboards for **Students, Faculty, and Admins**, along with a live **Concurrency Visualizer** to demonstrate multithreading and synchronization concepts in real time.
+This project demonstrates advanced **Object-Oriented Design (OOD)** concepts, layered architecture, thread-safe concurrent processing, and a professional desktop GUI using **JavaFX** and custom **CSS styling**.
+
+The system includes dedicated dashboards for **Students**, **Faculty**, and **Admins**, along with a live **Concurrency Visualizer** to demonstrate multithreading and synchronization concepts in real time.
 
 ---
 
-# 🚀 Key Features
+## ✨ Features
 
-## 👨‍🎓 Student Dashboard
+### 👨‍🎓 Student Dashboard
 - Register for courses
 - Drop enrolled courses
 - View registered courses
@@ -19,43 +20,45 @@ The system includes dedicated dashboards for **Students, Faculty, and Admins**, 
 - Credit limit enforcement
 - Waitlist support for full courses
 
-## 👨‍🏫 Faculty Dashboard
+### 👨‍🏫 Faculty Dashboard
 - View assigned courses
 - Monitor enrolled students
 - Access course details
 - Faculty-course assignment management
 
-## 👨‍💼 Admin Dashboard
-- Add/manage courses
+### 👨‍💼 Admin Dashboard
+- Add and manage courses
 - Add students and faculty
 - Assign faculty to courses
-- Configure prerequisites
-- Prevent circular prerequisite chains
+- Configure course prerequisites
+- Prevent circular prerequisite chains using DFS
 - Mark course completion for students
-- System-wide analytics dashboard
+- System-wide analytics overview
 
-## ⚡ Concurrency Visualizer
+### ⚡ Concurrency Visualizer
 - Simulates multiple student threads registering simultaneously
-- Demonstrates race conditions safely
-- Uses synchronized(course) locking
+- Demonstrates safe race-condition handling
+- Uses `synchronized(course)` locking
 - Real-time thread status updates
-- Live event logging
+- Live concurrent event logging
 - Prevents over-enrollment under concurrent access
 
 ---
 
-# 🧰 Tech Stack
+## 🧰 Tech Stack
 
-- Java 21
-- JavaFX
-- CSS (Dark Theme UI)
-- Multithreading & Synchronization
-- OOP & OOD Principles
-- In-Memory Repository Architecture
+| Technology | Purpose |
+|---|---|
+| Java 21 | Core application development |
+| JavaFX | GUI framework |
+| CSS | Dark-themed UI styling |
+| Multithreading | Concurrent registration simulation |
+| OOP & OOD | Application architecture |
+| In-Memory Repository | Data persistence simulation |
 
 ---
 
-# 🎯 OOD Concepts Implemented
+## 🎯 OOD Concepts Implemented
 
 - Encapsulation
 - Inheritance
@@ -69,55 +72,55 @@ The system includes dedicated dashboards for **Students, Faculty, and Admins**, 
 
 ---
 
-# 📂 Project Structure
+## 📂 Project Structure
 
 ```text
 CRS/
 ├── src/
 │
-│   ├── gui/                # JavaFX controllers & screens
+│   ├── gui/                        # JavaFX controllers & UI screens
 │   │   ├── LoginController.java
 │   │   ├── StudentController.java
 │   │   ├── FacultyController.java
 │   │   ├── AdminController.java
 │   │   ├── ConcurrencyController.java
 │   │   └── MainApp.java
-│
-│   ├── model/              # Core domain models
+│   │
+│   ├── model/                      # Core domain models
 │   │   ├── User.java
 │   │   ├── Student.java
 │   │   ├── Faculty.java
 │   │   ├── Admin.java
 │   │   ├── Course.java
 │   │   └── Registration.java
-│
-│   ├── service/            # Business logic layer
+│   │
+│   ├── service/                    # Business logic layer
 │   │   └── RegistrationService.java
-│
-│   ├── store/              # In-memory data store
+│   │
+│   ├── store/                      # In-memory data store
 │   │   └── CRSDataStore.java
-│
-│   ├── exceptions/         # Custom exceptions
+│   │
+│   ├── exceptions/                 # Custom exceptions
 │   │   └── CRSException.java
-│
+│   │
 │   └── resources/
 │       └── styles/
 │           └── dark-theme.css
 │
-├── compile.sh              # Linux build automation
-├── run.sh                  # Linux run automation
+├── compile.sh                      # Linux build automation
+├── run.sh                          # Linux execution script
 └── README.md
 ````
 
 ---
 
-# ⚙️ Prerequisites
+## ⚙️ Prerequisites
 
 Before running the project, ensure you have:
 
 * Java 21 or later installed
 * JavaFX SDK configured
-* Linux / Linux Mint / Ubuntu environment recommended
+* Linux / Ubuntu / Linux Mint recommended
 
 Check Java version:
 
@@ -127,11 +130,11 @@ java -version
 
 ---
 
-# 🛠️ How to Compile & Run
+## 🛠️ How to Compile & Run
 
-## Recommended Method
+### Recommended Method
 
-Open terminal inside the project root folder:
+Open terminal inside the project root folder and run:
 
 ```bash
 ./compile.sh && ./run.sh
@@ -139,29 +142,29 @@ Open terminal inside the project root folder:
 
 This automatically:
 
-* Compiles all modules
-* Configures JavaFX paths
+* Compiles all source files
+* Configures JavaFX module paths
 * Launches the application
 
 ---
 
-# 🔐 Demo Credentials
+## 🔐 Demo Credentials
 
-## 👨‍💼 Admin
+### 👨‍💼 Admin
 
 ```text
 ID: A001
 Password: admin123
 ```
 
-## 👨‍🎓 Students
+### 👨‍🎓 Students
 
 ```text
 IDs: S001 – S005
 Password: pass123
 ```
 
-## 👨‍🏫 Faculty
+### 👨‍🏫 Faculty
 
 ```text
 IDs: F001, F002
@@ -170,52 +173,52 @@ Password: pass123
 
 ---
 
-# ⚡ Concurrency Demonstration
+## ⚡ Concurrency Demonstration
 
-The application includes a dedicated JavaFX Concurrency Test Visualizer.
+The application includes a dedicated **JavaFX Concurrency Test Visualizer**.
 
 ### Simulation Flow
 
 * 5 student threads attempt registration simultaneously
 * Only 2 seats are available
-* synchronized(course) locking prevents race conditions
+* `synchronized(course)` locking prevents race conditions
 * Remaining students are automatically waitlisted
 
 ### Concepts Demonstrated
 
 * Multithreading
 * Thread synchronization
-* Race condition prevention
+* Race-condition prevention
 * Real-time thread monitoring
 * Concurrent transaction safety
 
 ---
 
-# 🎨 UI Highlights
+## 🎨 UI Highlights
 
 * Modern dark-themed JavaFX interface
-* Responsive dashboard layout
-* Animated hover interactions
+* Responsive dashboard layouts
 * Styled tables and cards
+* Animated hover interactions
 * Real-time visual feedback
 * Professional admin panel design
 
 ---
 
-# 📚 Academic Concepts Covered
+## 📚 Academic Concepts Covered
 
-This project was developed as part of an MCA Java academic project and demonstrates:
+This project demonstrates:
 
 * Advanced Java Programming
-* GUI Development using JavaFX
+* JavaFX GUI Development
 * Object-Oriented Design
 * Concurrent Programming
-* Data Validation
+* Validation & Exception Handling
 * Multi-layered Application Architecture
 
 ---
 
-# 📌 Future Improvements
+## 📌 Future Improvements
 
 * Database integration (MySQL/PostgreSQL)
 * REST API support
@@ -227,7 +230,14 @@ This project was developed as part of an MCA Java academic project and demonstra
 
 ---
 
-# 📄 License
+## 👨‍💻 Author
+
+**Satyarth Gupta**
+MCA Project — Course Registration System (CRS)
+
+---
+
+## 📄 License
 
 This project is intended for academic and educational purposes.
 
